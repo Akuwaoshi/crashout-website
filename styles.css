@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    background: #0a0a23;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    height: 100vh;
+    overflow: hidden;
+    cursor: default;
+}
+
+#starfield {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.thought {
+    position: absolute;
+    opacity: 0.4;
+    font-size: 1.2rem;
+    animation: float 15s linear infinite;
+    text-shadow: 0 0 5px #4ecdc4;
+    pointer-events: none;
+}
+
+#game-ui {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+}
+
+#gameCanvas {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    image-rendering: crisp-edges;
+}
+
+#ending {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    color: #4ecdc4;
+    padding: 20px;
+    white-space: pre-wrap;
+    z-index: 999;
+    display: none;
+}
+
+button {
+    background: #1a1a40;
+    color: #fff;
+    border: 1px solid #4ecdc4;
+    padding: 10px 20px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+button:hover {
+    background: #2a2a60;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-100vh); }
+}
+
+@media (max-width: 768px) {
+    .thought { font-size: 0.9rem; }
+}
