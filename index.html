@@ -1,28 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-psyche-state="collapse">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADAM'S CRASHOUT</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CRΔSHOUT_TERMINAL</title>
+    <script src="./assets/three.r128.min.js"></script>
+    <style>
+        :root {
+            --stress: 0;
+            --corruption: 0;
+            --pupil: 1;
+            --time-dilation: 1;
+        }
+
+        body {
+            background: 
+                radial-gradient(
+                    circle at calc(var(--mouse-x, 50vw)) calc(var(--mouse-y, 50vh)),
+                    hsl(0 100% calc(2% + var(--stress) * 0.3%)),
+                    #000
+                );
+            color: hsl(0 100% calc(50% + var(--stress) * 0.5%));
+            font-family: 'VT323', monospace;
+            cursor: none;
+            animation: 
+                hue-rotate calc(1s / var(--time-dilation)) infinite,
+                tremble calc(0.2s * var(--stress)) infinite;
+        }
+
+        @keyframes hue-rotate {
+            to { filter: hue-rotate(calc(var(--stress) * 1deg)); }
+        }
+
+        @keyframes tremble {
+            0%,100% { transform: translate(0,0); }
+            20% { transform: translate(1px, -1px); }
+            40% { transform: translate(-1px, 2px); }
+            60% { transform: translate(2px, -2px); }
+            80% { transform: translate(-2px, 1px); }
+        }
+
+        .neural-overlay {
+            position: fixed;
+            pointer-events: none;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    #ff3860 calc(var(--corruption) * 1%),
+                    transparent calc(var(--corruption) * 2%)
+                ),
+                url('data:image/png;base64,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');
+            mix-blend-mode: difference;
+            opacity: calc(var(--corruption) * 0.02);
+        }
+
+        #neuroVis {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .hidden { display: none; }
+        .subliminal { opacity: 0.3; font-size: 0.8em; }
+    </style>
 </head>
 <body>
-    <div id="starfield"></div>
+    <div class="neural-overlay"></div>
+    <canvas id="neuroVis"></canvas>
     
-    <div id="thought-container">
-        <div class="thought" style="left: 10%">why won't dad just trust me?</div>
-        <div class="thought" style="left: 45%">She smiled today. Was it at me?</div>
-        <div class="thought" style="left: 70%">I'm so fucking tired.</div>
-    </div>
+    <main>
+        <div data-cipher="atomic" class="hidden">13</div>
+        <div data-cipher="dna" class="hidden">adenine</div>
+        <div data-cipher="perfect" class="hidden">6</div>
+        <div data-cipher="morse" class="hidden">_</div>
 
-    <div id="game-ui">
-        <button id="start-btn">[START THE GRIND]</button>
-        <div id="hud">Grades: <span id="grade-count">0</span></div>
-    </div>
+        <article class="trauma-entry">
+            <p>DATE: 11/14 ██████<br>
+            CHEM SCORE: <span id="chemScore">8█%</span><br>
+            REQUIRED: <span class="stress-trigger">90%</span></p>
+            <p class="subliminal">(hover to stabilize)</p>
+        </article>
 
-    <canvas id="gameCanvas"></canvas>
-    <div id="ending"></div>
+        <div class="hidden" id="pianoFragment">
+            <p>FREQ: 440Hz + <span class="piano-cipher">17.5</span></p>
+            <p>LOC: BUS 38 @ <span class="piano-cipher">5:30</span></p>
+        </div>
+    </main>
 
-    <script src="script.js"></script>
+    <script>
+        const BIOS = {
+            stress: 0,
+            corruption: 0,
+            mousePos: [0,0],
+            neuralMesh: null,
+            init() {
+                this.initWebGL();
+                this.initEventListeners();
+                this.startCorruptionCycle();
+            },
+
+            initWebGL() {
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({canvas: neuroVis});
+                
+                const geometry = new THREE.BufferGeometry();
+                const vertices = new Float32Array(10000 * 3);
+                for(let i = 0; i < 10000; i++) {
+                    vertices[i*3] = Math.random()*400-200;
+                    vertices[i*3+1] = Math.random()*400-200;
+                    vertices[i*3+2] = Math.random()*400-200;
+                }
+                geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+                
+                const material = new THREE.PointsMaterial({
+                    size: 0.1,
+                    color: 0xff3860,
+                    transparent: true,
+                    blending: THREE.AdditiveBlending
+                });
+
+                this.neuralMesh = new THREE.Points(geometry, material);
+                scene.add(this.neuralMesh);
+                camera.position.z = 200;
+
+                const animate = () => {
+                    requestAnimationFrame(animate);
+                    this.neuralMesh.rotation.x += Math.min(this.stress, 80) * 0.0001;
+                    this.neuralMesh.rotation.y += Math.min(this.stress, 80) * 0.0002;
+                    renderer.render(scene, camera);
+                };
+                animate();
+            },
+
+            initEventListeners() {
+                document.addEventListener('mousemove', e => {
+                    this.mousePos = [e.clientX, e.clientY];
+                    this.stress = Math.min(80, this.stress + 0.1);
+                    this.updateRootVars();
+                });
+
+                document.addEventListener('keydown', () => {
+                    this.stress = Math.min(80, this.stress + 2);
+                    this.corruption += 1;
+                    this.injectHallucination();
+                });
+            },
+
+            startCorruptionCycle() {
+                setInterval(() => {
+                    this.corruption += 0.1;
+                    this.updateRootVars();
+                }, 1000);
+            },
+
+            updateRootVars() {
+                document.documentElement.style.setProperty('--stress', this.stress);
+                document.documentElement.style.setProperty('--corruption', this.corruption);
+                document.documentElement.style.setProperty('--mouse-x', `${this.mousePos[0]}px`);
+                document.documentElement.style.setProperty('--mouse-y', `${this.mousePos[1]}px`);
+            },
+
+            injectHallucination() {
+                if(this.corruption > 30) {
+                    const phrases = ['SHE KNOWS','FAILURE','WRONG','0xDEAD'];
+                    const el = document.createElement('div');
+                    el.textContent = phrases[Math.floor(Math.random()*phrases.length)];
+                    el.style.position = 'fixed';
+                    el.style.left = `${Math.random()*90}%`;
+                    el.style.top = `${Math.random()*90}%`;
+                    el.style.color = '#ff3860';
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 200);
+                }
+            }
+        };
+
+        let audioEnabled = false;
+        document.body.addEventListener('click', () => {
+            if(!audioEnabled) {
+                const ctx = new (AudioContext || webkitAudioContext)();
+                [40, 55, 111, 222].forEach(freq => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain).connect(ctx.destination);
+                    osc.type = 'square';
+                    osc.frequency.value = freq;
+                    gain.gain.value = 0.02;
+                    osc.start();
+                });
+                audioEnabled = true;
+            }
+        });
+
+        BIOS.init();
+
+        let fakeTime = 0;
+        setInterval(() => {
+            fakeTime += Math.random() > 0.5 ? 1 : -1;
+            document.documentElement.style.setProperty('--time-dilation', 
+                1 + Math.sin(fakeTime)*0.3
+            );
+        }, 1000);
+
+        document.querySelectorAll('[data-cipher]').forEach(el => {
+            el.addEventListener('click', () => {
+                const solutions = {
+                    atomic: 'Al',
+                    dna: 'A',
+                    perfect: '6',
+                    morse: 'M'
+                };
+                if(confirm(solutions[el.dataset.cipher])) {
+                    BIOS.corruption -= 10;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
